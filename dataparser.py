@@ -1,4 +1,4 @@
-import extractparams
+import extract_descriptors
 import csv
 
 with open("BigSolDBv2.0.csv", "r") as csvfile:
@@ -11,6 +11,6 @@ with open("BigSolDBv2.0.csv", "r") as csvfile:
         if logS == "":
             continue
         print(f"{smiles}, {temp}, {solvent}, {logS}")
-        params = extractparams.extractparams(smiles)
+        params = extract_descriptors.extract_descriptors(smiles)
 
 #extract_parameters()
