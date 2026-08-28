@@ -114,6 +114,19 @@ def get_func_atom_ratio(mol) -> float:
 
     return func_atom_count/atom_count
 
+def get_ring_count(mol) -> int:
+    """Calculates smallest set of smallest rings
+
+    Args:
+        mol (mol): Input molecule
+
+    Returns:
+        int: SSSR
+    """
+    sssr = Chem.GetSymmSSSR(mol)
+    ring_count = len(sssr)
+    return ring_count
+
 def extract_descriptors(smiles) -> list:
     """Calculates parameters
 
@@ -132,9 +145,10 @@ def extract_descriptors(smiles) -> list:
     formal_charge = get_formal_charge(mol)
     tpsa = get_TPSA(mol)
     func_atom_ratio = get_func_atom_ratio(mol)
+    ring_count = get_ring_count(mol)
 
     descriptors = [mol_weight, logP, H_donors, H_acceptors, arom_ratio, formal_charge, tpsa, func_atom_ratio]
-    print(f"mol_weight: {mol_weight}\nlogP: {logP}\nH_donors: {H_donors}\nH_acceptors: {H_acceptors}\narom_ratio: {arom_ratio}\nformal_charge: {formal_charge}\ntpsa: {tpsa}\nfunc_atom_ratio: {func_atom_ratio}")
+    print(f"mol_weight: {mol_weight}\nlogP: {logP}\nH_donors: {H_donors}\nH_acceptors: {H_acceptors}\narom_ratio: {arom_ratio}\nformal_charge: {formal_charge}\ntpsa: {tpsa}\nfunc_atom_ratio: {func_atom_ratio}\nring_count: {ring_count}")
     return descriptors
 
 
