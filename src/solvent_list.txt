@@ -1,0 +1,215 @@
+solvent count : 214 
+ethanol: 10271      #
+methanol: 8220      #
+isopropanol: 7298   #
+water: 6814         #
+ethyl acetate: 6802 #
+n-propanol: 6616    
+acetone: 6062       #
+n-butanol: 5613     
+acetonitrile: 5251  #
+DMF: 2767           #
+toluene: 2618       #
+isobutanol: 2440    
+1,4-dioxane: 2183   #
+methyl acetate: 1908
+THF: 1524           #
+2-butanone: 1464    
+n-pentanol: 1374    
+sec-butanol: 1210   
+n-hexane: 1119      #
+ethylene glycol: 1103
+NMP: 1099
+cyclohexane: 1090   #
+DMSO: 1081          #
+n-butyl acetate: 1079
+n-octanol: 996  
+chloroform: 986     #
+n-propyl acetate: 871
+acetic acid: 758
+dichloromethane: 691#
+cyclohexanone: 547
+propylene glycol: 546
+isopropyl acetate: 544
+DMAc: 529
+2-ethoxyethanol: 486
+isopentanol: 469
+n-heptane: 458
+ethyl formate: 453
+benzene: 447
+1,2-dichloroethane: 429
+n-hexanol: 377
+2-methoxyethanol: 360
+isobutyl acetate: 293
+tetrachloromethane: 273
+PEG-400: 241
+n-pentyl acetate: 226
+transcutol: 221
+n-heptanol: 215
+ethylbenzene: 209
+MIBK: 205
+2-propoxyethanol: 189
+tert-butanol: 180
+MTBE: 162
+2-butoxyethanol: 150
+propionic acid: 146
+o-xylene: 143
+formic acid: 141
+diethyl ether: 136
+m-xylene: 130
+p-xylene: 125
+chlorobenzene: 121
+dimethyl carbonate: 109
+n-octane: 102
+formamide: 101
+cyclopentanone: 97
+2-pentanone: 94
+anisole: 93
+cyclopentyl methyl ether: 92
+gamma-butyrolactone: 79
+1-methoxy-2-propanol: 78
+pyridine: 76
+3-pentanone: 75
+furfural: 72
+n-dodecane: 71
+methylcyclohexane: 62
+diethylene glycol: 62
+diisopropyl ether: 58
+tert-amyl alcohol: 55
+acetylacetone: 51
+n-hexadecane: 50
+acetophenone: 50
+methyl propionate: 50
+isopentyl acetate: 49
+trichloroethylene: 48
+n-nonanol: 48
+cyclohexanol: 47
+benzyl alcohol: 45
+2-ethylhexanol: 43
+isooctanol: 41
+dipropyl ether: 41
+PEG-200: 36
+1,2-dichlorobenzene: 36
+ethyl lactate: 36
+propylene carbonate: 35
+n-methylformamide: 34
+2-pentanol: 33
+n-pentane: 33
+1-propoxy-2-propanol: 33
+1-methoxy-2-propyl acetate: 33
+2-(2-methoxypropoxy) propanol: 33
+mesitylene: 31
+ε-caprolactone: 30
+p-cymene: 29
+epichlorohydrin: 27
+1,1,1-trichloroethane: 25
+2-aminoethanol: 24
+morpholine-4-carbaldehyde: 24
+sulfolane: 24
+2,2,4-trimethylpentane: 23
+2-methyltetrahydrofuran: 23
+n-hexyl acetate: 21
+isooctane: 21
+2-(2-butoxyethoxy)ethanol: 21
+sec-butyl acetate: 20
+tert-butyl acetate: 20
+decalin: 20
+glycerin: 20
+diglyme: 20
+acrylic acid: 19
+isopropyl myristate: 19
+n-butyric acid: 19
+acetyl acetate: 18
+di(2-ethylhexyl) phthalate: 18
+ethyl propionate: 18
+nitromethane: 18
+1,2-diethoxyethane: 18
+benzonitrile: 16
+trioctyl phosphate: 15
+PEGDME 250: 15
+1-bromopropane: 15
+gamma-valerolactone: 14
+n-decanol: 13
+triethyl phosphate: 13
+4-methyl-2-pentanol: 12
+propionitrile: 12
+vinylene carbonate: 12
+1,1,2-trichlorotrifluoroethane: 11
+DMS: 10
+cumene: 10
+2-octanol: 10
+2-hexanone: 10
+octyl acetate: 10
+limonene: 10
+1,2-dimethoxyethane: 10
+ethyl orthosilicate: 10
+tributyl phosphate: 10
+diacetone alcohol: 10
+N,N-dimethylaniline: 10
+acrylonitrile: 10
+aniline: 10
+1,3-propanediol: 9
+bromobenzene: 9
+dibromomethane: 9
+1,1,2,2-tetrachloroethane: 9
+2-methyl-cyclohexyl acetate: 9
+tetrabutyl urea: 9
+diisobutyl methanol: 9
+2-phenylethanol: 9
+styrene: 9
+dioctyl adipate: 9
+dimethyl sulfate: 9
+ethyl butyrate: 9
+methyl lactate: 9
+butyl lactate: 9
+diethyl carbonate: 9
+propanediol butyl ether: 9
+triethyl orthoformate: 9
+p-tert-butyltoluene: 9
+methyl 4-tert-butylbenzoate: 9
+morpholine: 9
+tert-butylamine: 9
+n-dodecanol: 9
+dimethoxymethane: 8
+ethylene carbonate: 8
+cyrene: 8
+2-ethoxyethyl acetate: 7
+furan: 7
+2-ethylhexyl acetate: 7
+1,2,4-trichlorobenzene: 7
+4-methylpyridine: 7
+dibutyl ether: 6
+cyclohexylamine: 6
+2,6-dimethyl-4-heptanol: 6
+DEF: 6
+dimethyl isosorbide: 6
+tetrachloroethylene: 5
+eugenol: 5
+triacetin: 5
+span 80: 5
+1,4-butanediol: 5
+PEG-600: 5
+1,1-dichloroethane: 5
+2-methyl-1-pentanol: 4
+methyl formate: 4
+2-methyl-1-butanol: 3
+n-decane: 2
+butyronitrile: 2
+PEG-300: 2
+3,7-dimethyl-1-octanol: 2
+Solvent: 1
+1-chlorooctane: 1
+1-chlorotetradecane: 1
+chlorocyclohexane: 1
+n-nonane: 1
+undecane: 1
+tert-butylcyclohexane: 1
+cyclooctane: 1
+cyclopentanol: 1
+tetrahydropyran: 1
+tert-amyl methyl ether: 1
+2,5,8-trioxanonane: 1
+1-hexene: 1
+2-isopropoxyethanol: 1
+2,2,2-trifluoroethanol: 1
+methyl butyrate: 1
