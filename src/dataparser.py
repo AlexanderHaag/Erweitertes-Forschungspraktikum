@@ -2,6 +2,9 @@ import extract_descriptors
 import csv
 
 def main():
+    """This function generates a csv file from parameters calculated by "extract.parameters" and directly from "BigSolDBv2.0.csv". 
+    These parameters are then saved in a new csv file.
+    """
     solvent_list = ["ethanol",
                     "methanol",
                     "isopropanol",
@@ -20,7 +23,7 @@ def main():
                     "dichloromethane"]
     
     counter = 0
-    
+
     with open("src/BigSolDBv2.0.csv", "r") as csvfile:
         for entries in csv.reader(csvfile, quotechar='"', delimiter=',',quoting=csv.QUOTE_ALL, skipinitialspace=True):
             smiles = entries[0]
@@ -35,7 +38,7 @@ def main():
             #print(f"{smiles}, {temp}, {solvent}, {logS}")
             counter +=1
             params = extract_descriptors.extract_descriptors(smiles)
-            print(counter)
+        print(counter)
 
 if __name__=="__main__":
     main()
