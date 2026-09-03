@@ -13,7 +13,7 @@ def get_mol_weight(mol) -> float:
     Returns:
         float: Returns molecular weight of input molecule
     """
-    mol_weight = Descriptors.MolWt(mol)
+    mol_weight = round(Descriptors.MolWt(mol), 3)
     return mol_weight
 
 def get_logP(mol) -> float:
@@ -25,7 +25,7 @@ def get_logP(mol) -> float:
     Returns:
         float: Calculated logP of input molecule
     """
-    logP = Descriptors.MolLogP(mol)
+    logP = round(Descriptors.MolLogP(mol), 5)
     return logP
 
 def get_H_donors(mol) -> int:
@@ -67,7 +67,7 @@ def get_aromatic_ratio(mol) -> float:
         atom_count += 1
         if atom.GetIsAromatic() == True:
             aromatic_atom_count += 1
-    return aromatic_atom_count/atom_count
+    return round(aromatic_atom_count/atom_count, 3)
 
 def get_formal_charge(mol) -> int:
     """Calculates formal charge of input molecule using the rdkit.Chem module
@@ -90,7 +90,7 @@ def get_TPSA(mol) -> float:
     Returns:
         float: TPSA (topological polar surface area) of input molecule
     """
-    tpsa = rdMolDescriptors.CalcTPSA(mol)
+    tpsa = round(rdMolDescriptors.CalcTPSA(mol), 2)
     return tpsa
 
 def get_func_atom_ratio(mol) -> float:
@@ -112,7 +112,7 @@ def get_func_atom_ratio(mol) -> float:
         elif any(bond.GetBondType() != Chem.BondType.SINGLE for bond in atom.GetBonds()):
                 func_atom_count += 1
 
-    return func_atom_count/atom_count
+    return round(func_atom_count/atom_count, 3)
 
 def get_ring_count(mol) -> int:
     """Calculates smallest set of smallest rings
@@ -128,7 +128,7 @@ def get_ring_count(mol) -> int:
     return ring_count
 
 def extract_descriptors(smiles) -> list:
-    """Calculates parameters
+    """Calculates parameters of input Smiles
 
     Args:
         smiles (str): Smiles code of input molecule
