@@ -1,0 +1,88 @@
+# Solubility Prediction with Molecular Descriptors
+
+This project trains a machine learning model to predict solvent-dependent solubility (`logS`) from molecular descriptors. The workflow combines RDKit-based feature extraction with a Random Forest regressor to estimate solubility from SMILES strings and solvent information.
+
+## Overview
+
+The project reads molecular data from a curated CSV file, calculates chemical descriptors such as molecular weight, logP, hydrogen bond counts, aromatic ratio, TPSA, ring count, and functional atom ratio, then trains a regression model to predict `logS`.
+
+The main steps are:
+
+1. Parse and filter the source dataset
+2. Extract molecular descriptors using RDKit
+3. Train a Random Forest regressor
+4. Evaluate the model with MAE, RMSE, and R²
+5. Save the results in `results/random_forest_basic_results.txt`
+
+## Project structure
+
+- `data/raw/BigSolDBv2.0.csv` — source dataset with solubility and solvent metadata
+- `data/processed/data_basic.csv` — processed dataset used for the baseline model
+- `src/extract_descriptors.py` — RDKit descriptor calculation functions
+- `src/dataparser.py` — dataset preparation and filtering logic
+- `src/solvent_list_gen.py` — solvent frequency summary for the dataset
+- `src/rfg_basic.py` — baseline Random Forest model trained on the basic descriptor dataset
+- `src/rfg_sol_desc.py` — Random Forest model trained with solvent descriptors included
+- `results/random_forest_basic_results.txt` — recorded model performance metrics
+- `requirements.txt` — Python dependencies
+- `tests/test.py` — test scaffold for future validation
+
+## Technologies used
+
+- Python
+- pandas
+- scikit-learn
+- RDKit
+
+## Installation
+
+From the project root, create and activate a virtual environment and install dependencies:
+
+```bash
+python -m venv .venv
+# Windows PowerShell
+.\.venv\Scripts\Activate.ps1
+
+pip install -r requirements.txt
+```
+
+## Usage
+
+Run the basic baseline model:
+
+```bash
+python src/rfg_basic.py
+```
+
+This will:
+
+- load the training data from `data/processed/data_basic.csv`
+- preprocess numeric and categorical features
+- train the Random Forest model
+- evaluate it on a test split
+- append the metrics to `results/random_forest_basic_results.txt`
+
+A second model variant using solvent descriptors is also available:
+
+```bash
+python src/rfg_sol_desc.py
+```
+
+## Model details
+
+The baseline model uses:
+
+- `RandomForestRegressor`
+- one-hot encoding for the solvent feature
+- a train/test split with `test_size=0.1`
+- metrics: `mean_absolute_error`, `root_mean_squared_error`, and `r2_score`
+
+## Notes
+
+- The project is intended as a research/practical machine learning workflow for solubility prediction.
+- The descriptor extraction is designed around RDKit molecule calculations and is suitable for exploring structure-property relationships.
+- The repository is still structured as a research prototype and can be extended with alternative models, hyperparameter tuning, or a more comprehensive validation pipeline.
+
+## License
+
+This project does not currently include a formal license file. Please check with the project owner or institution before redistribution or public use.

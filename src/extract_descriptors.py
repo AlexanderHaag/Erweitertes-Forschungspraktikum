@@ -5,61 +5,65 @@ from rdkit.Chem import rdMolDescriptors
 
 
 def get_mol_weight(mol) -> float:
-    """Calculates molecular weight using rdkit.Chem.Descriptors module
+    """Return the molecular weight of a molecule.
 
     Args:
-        mol (mol)): Input molecule
+        mol: RDKit molecule object.
 
     Returns:
-        float: Returns molecular weight of input molecule
+        The molecular weight rounded to three decimal places.
     """
     mol_weight = round(Descriptors.MolWt(mol), 3)
     return mol_weight
 
+
 def get_logP(mol) -> float:
-    """Calculates logP of input molecule using the rdkit.Chem.Descriptors module
+    """Return the octanol-water partition coefficient (logP) for a molecule.
 
     Args:
-        mol (mol): Input molecule
+        mol: RDKit molecule object.
 
     Returns:
-        float: Calculated logP of input molecule
+        The calculated logP value rounded to five decimal places.
     """
     logP = round(Descriptors.MolLogP(mol), 5)
     return logP
 
+
 def get_H_donors(mol) -> int:
-    """Counts H donors in input molecule using rdkit.Chem.lipinski module
+    """Count the number of hydrogen-bond donors in a molecule.
 
     Args:
-        mol (mol): Input molecule
+        mol: RDKit molecule object.
 
     Returns:
-        int: Number of H donors present in input  molecule
+        The number of hydrogen-bond donor atoms.
     """
     H_donors = Lipinski.NumHDonors(mol)
     return H_donors
 
+
 def get_H_acceptors(mol) -> int:
-    """Counts H acceptors in input molecule using rdkit.Chem.lipinski module
+    """Count the number of hydrogen-bond acceptors in a molecule.
 
     Args:
-        mol (mol): Input molecule
+        mol: RDKit molecule object.
 
     Returns:
-        int: Number of H acceptors present in input  molecule
+        The number of hydrogen-bond acceptor atoms.
     """
     H_acceptors = Lipinski.NumHAcceptors(mol)
     return H_acceptors
 
+
 def get_aromatic_ratio(mol) -> float:
-    """Calculates the ratio of aromatic heavy atoms to total atoms
+    """Return the fraction of aromatic atoms in the molecule.
 
     Args:
-        mol (mol): Input molecule
+        mol: RDKit molecule object.
 
     Returns:
-        float: Aromatic atom ratio (0 <= x <= 1)
+        The ratio of aromatic atoms to total atoms, rounded to three decimals.
     """
     atom_count = 0
     aromatic_atom_count = 0
@@ -67,40 +71,46 @@ def get_aromatic_ratio(mol) -> float:
         atom_count += 1
         if atom.GetIsAromatic() == True:
             aromatic_atom_count += 1
-    return round(aromatic_atom_count/atom_count, 3)
+    return round(aromatic_atom_count / atom_count, 3)
+
 
 def get_formal_charge(mol) -> int:
-    """Calculates formal charge of input molecule using the rdkit.Chem module
+    """Return the formal charge of a molecule.
 
     Args:
-        mol (mol): Input molecule
+        mol: RDKit molecule object.
 
     Returns:
-        int: Formal charge of input molecule
+        The integer formal charge of the molecule.
     """
     total_charge = Chem.GetFormalCharge(mol)
     return total_charge
 
+
 def get_TPSA(mol) -> float:
-    """Calculates TPSA of input molecule using the rdkit.Chem.rdMolDescriptors module
+    """Return the topological polar surface area (TPSA) of a molecule.
 
     Args:
-        mol (mol): Input molecule
+        mol: RDKit molecule object.
 
     Returns:
-        float: TPSA (topological polar surface area) of input molecule
+        The TPSA value rounded to two decimal places.
     """
     tpsa = round(rdMolDescriptors.CalcTPSA(mol), 2)
     return tpsa
 
+
 def get_func_atom_ratio(mol) -> float:
-    """Calculates the ratio of atom in functional groups to the total amount of atoms in the input molecule
+    """Return the ratio of non-carbon or chemically substituted atoms to all atoms.
+
+    The function counts atoms that are not carbon, or carbon atoms attached to
+    any bond type other than a single bond, as functional atoms.
 
     Args:
-        mol (mol): Input molecule
+        mol: RDKit molecule object.
 
     Returns:
-        float: Functional atom ratio (0 <= x <= 1)
+        The functional atom ratio, rounded to three decimal places.
     """
     atom_count = 0
     func_atom_count = 0
@@ -110,31 +120,35 @@ def get_func_atom_ratio(mol) -> float:
             func_atom_count += 1
             continue
         elif any(bond.GetBondType() != Chem.BondType.SINGLE for bond in atom.GetBonds()):
-                func_atom_count += 1
+            func_atom_count += 1
 
-    return round(func_atom_count/atom_count, 3)
+    return round(func_atom_count / atom_count, 3)
+
 
 def get_ring_count(mol) -> int:
-    """Calculates smallest set of smallest rings
+    """Return the number of rings in a molecule using the smallest set of smallest rings.
 
     Args:
-        mol (mol): Input molecule
+        mol: RDKit molecule object.
 
     Returns:
-        int: SSSR
+        The number of rings detected in the molecular structure.
     """
     sssr = Chem.GetSymmSSSR(mol)
     ring_count = len(sssr)
     return ring_count
 
+
 def extract_descriptors(smiles) -> list:
-    """Calculates parameters of input Smiles
+    """Compute a set of molecular descriptors for a SMILES string.
 
     Args:
-        smiles (str): Smiles code of input molecule
+        smiles: A valid SMILES string representing a molecule.
 
     Returns:
-        list: List of the calculated parameters
+        A list containing the calculated descriptors in the following order:
+        mol_weight, logP, H_donors, H_acceptors, arom_ratio, formal_charge,
+        tpsa, func_atom_ratio, and ring_count.
     """
     mol = Chem.MolFromSmiles(smiles)
     mol_weight = get_mol_weight(mol)

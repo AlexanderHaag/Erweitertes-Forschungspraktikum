@@ -1,33 +1,33 @@
-solvent count : 214 
-ethanol: 10271      #
-methanol: 8220      #
-isopropanol: 7298   #
-water: 6814         #
-ethyl acetate: 6802 #
-n-propanol: 6616    
-acetone: 6062       #
-n-butanol: 5613     
-acetonitrile: 5251  #
-DMF: 2767           #
-toluene: 2618       #
-isobutanol: 2440    
-1,4-dioxane: 2183   #
+solvent count : 214
+ethanol: 10271
+methanol: 8220
+isopropanol: 7298
+water: 6814
+ethyl acetate: 6802
+n-propanol: 6616
+acetone: 6062
+n-butanol: 5613
+acetonitrile: 5251
+DMF: 2767
+toluene: 2618
+isobutanol: 2440
+1,4-dioxane: 2183
 methyl acetate: 1908
-THF: 1524           #
-2-butanone: 1464    
-n-pentanol: 1374    
-sec-butanol: 1210   
-n-hexane: 1119      #
+THF: 1524
+2-butanone: 1464
+n-pentanol: 1374
+sec-butanol: 1210
+n-hexane: 1119
 ethylene glycol: 1103
 NMP: 1099
-cyclohexane: 1090   #
-DMSO: 1081          #
+cyclohexane: 1090
+DMSO: 1081
 n-butyl acetate: 1079
-n-octanol: 996  
-chloroform: 986     #
+n-octanol: 996
+chloroform: 986
 n-propyl acetate: 871
 acetic acid: 758
-dichloromethane: 691#
+dichloromethane: 691
 cyclohexanone: 547
 propylene glycol: 546
 isopropyl acetate: 544
@@ -99,7 +99,7 @@ n-pentane: 33
 1-methoxy-2-propyl acetate: 33
 2-(2-methoxypropoxy) propanol: 33
 mesitylene: 31
-ε-caprolactone: 30
+Îµ-caprolactone: 30
 p-cymene: 29
 epichlorohydrin: 27
 1,1,1-trichloroethane: 25
