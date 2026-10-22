@@ -1,3 +1,5 @@
+"""Calculate RDKit molecular descriptors used by the solubility models."""
+
 import rdkit.Chem as Chem
 from rdkit.Chem import Descriptors
 from rdkit.Chem import Lipinski
@@ -168,6 +170,7 @@ def extract_descriptors(smiles) -> list:
 
 
 def main():
+    """Run a small descriptor-extraction example."""
     test_smiles = "c1ccccc1C"
     extract_descriptors(test_smiles)
 

@@ -1,3 +1,5 @@
+"""Count raw-data observations for each solvent and write a sorted list."""
+
 import csv
 from pathlib import Path
 
@@ -8,6 +10,7 @@ OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 
 def main():
+    """Write solvent occurrence counts to the processed-data directory."""
     solvent_dict = {}
     with RAW_DATA_PATH.open("r", newline="") as csvfile:
         for entries in csv.reader(csvfile, quotechar='"', delimiter=',', quoting=csv.QUOTE_ALL, skipinitialspace=True):

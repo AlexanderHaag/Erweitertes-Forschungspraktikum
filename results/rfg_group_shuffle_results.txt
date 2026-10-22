@@ -1,0 +1,38 @@
+GROUP-SHUFFLE RANDOM FOREST MODEL: Test size: 0.1; GroupKFold folds by molecule-solvent pair: 5; N_ESTIMATORS: 400; RANDOM_STATE: 42
+CRITERION: squared_error; MAX_DEPTH: None; MIN_SAMPLES_SPLIT: 2; MIN_SAMPLES_LEAF: 1; MAX_FEATURES: 0.5; N_JOBS: -1
+Rows used: 64777 (dropped 0)
+Training pool rows/molecule-solvent pairs: 58207/6172
+Test rows/molecule-solvent pairs: 6570/686
+
+Fold row/molecule-solvent-pair counts (train, validation):
+	Fold 1: 46565/4937, 11642/1235
+	Fold 2: 46565/4937, 11642/1235
+	Fold 3: 46566/4938, 11641/1234
+	Fold 4: 46566/4938, 11641/1234
+	Fold 5: 46566/4938, 11641/1234
+
+GroupKFold metrics (mean +/- std across folds):
+	MAE: 0.541823 +/- 0.013638
+	RMSE: 0.749790 +/- 0.023046
+	R2: 0.671198 +/- 0.015240
+
+GroupKFold permutation importance (mean RMSE increase +/- std across folds and repeats; descriptive, not p-values):
+	solvent: 0.435312 +/- 0.019783
+	mol_weight: 0.272840 +/- 0.015099
+	logP: 0.233755 +/- 0.020969
+	tpsa: 0.201455 +/- 0.007746
+	ring_count: 0.149277 +/- 0.013334
+	temp: 0.063594 +/- 0.004552
+	H_donors: 0.056747 +/- 0.005150
+	func_atom_ratio: 0.055591 +/- 0.004267
+	arom_ratio: 0.043708 +/- 0.008469
+	H_acceptors: 0.033541 +/- 0.010546
+	formal_charge: 0.006920 +/- 0.007891
+Test metrics:
+	MAE: 0.482502
+	RMSE: 0.668958
+	R2: 0.721954
+Baseline test metrics:
+	MAE: 1.005276
+	RMSE: 1.268927
+	R2: -0.000442

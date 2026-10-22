@@ -1,0 +1,46 @@
+ALL-ENTRIES CATBOOST MODEL: Test size: 0.1; GroupKFold folds by molecule-solvent pair: 5; ITERATIONS: 400; RANDOM_STATE: 42
+LEARNING_RATE: 0.05; DEPTH: 8; THREAD_COUNT: -1
+Rows used: 100983 (dropped 0)
+Training pool rows/molecule-solvent pairs: 90806/9769
+Test rows/molecule-solvent pairs: 10177/1086
+
+Fold row/molecule-solvent-pair counts (train, validation):
+	Fold 1: 72644/7815, 18162/1954
+	Fold 2: 72645/7816, 18161/1953
+	Fold 3: 72645/7815, 18161/1954
+	Fold 4: 72645/7815, 18161/1954
+	Fold 5: 72645/7815, 18161/1954
+
+GroupKFold metrics (mean +/- std across folds):
+	MAE: 0.492580 +/- 0.015293
+	RMSE: 0.659008 +/- 0.027000
+	R2: 0.711919 +/- 0.011064
+
+GroupKFold permutation importance (mean RMSE increase +/- std across folds and repeats; descriptive, not p-values):
+	logP: 0.311190 +/- 0.013787
+	mol_weight: 0.255714 +/- 0.016991
+	tpsa: 0.207845 +/- 0.009049
+	ring_count: 0.163863 +/- 0.006600
+	func_atom_ratio: 0.123593 +/- 0.006584
+	arom_ratio: 0.105677 +/- 0.004970
+	sol_logP: 0.105557 +/- 0.007365
+	H_donors: 0.103957 +/- 0.004236
+	temp: 0.067061 +/- 0.003879
+	H_acceptors: 0.065205 +/- 0.005720
+	sol_func_atom_ratio: 0.048208 +/- 0.002955
+	sol_H_acceptors: 0.036653 +/- 0.006809
+	sol_mol_weight: 0.035299 +/- 0.004707
+	sol_tpsa: 0.024191 +/- 0.004570
+	sol_H_donors: 0.018092 +/- 0.003713
+	sol_ring_count: 0.003414 +/- 0.000839
+	formal_charge: 0.001420 +/- 0.001780
+	sol_formal_charge: 0.000000 +/- 0.000000
+	sol_arom_ratio: -0.000024 +/- 0.000196
+Test metrics:
+	MAE: 0.505093
+	RMSE: 0.690953
+	R2: 0.675878
+Baseline test metrics:
+	MAE: 0.974404
+	RMSE: 1.213833
+	R2: -0.000297

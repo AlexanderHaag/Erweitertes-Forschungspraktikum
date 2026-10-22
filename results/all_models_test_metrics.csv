@@ -1,0 +1,13 @@
+Model,Variant,Test split,MAE,RMSE,R2,Source file
+Random Forest,Basic (row-wise),Row-wise,0.131827,0.273335,0.9574,rfg_basic_results.txt
+Random Forest,Group shuffle,Molecule-solvent-pair-grouped,0.482502,0.668958,0.721954,rfg_group_shuffle_results.txt
+Random Forest,Solvent descriptors,Molecule-solvent-pair-grouped,0.449856,0.639924,0.745566,rfg_sol_desc_results.txt
+Random Forest,All entries,Molecule-solvent-pair-grouped,0.412371,0.628314,0.731982,rfg_all_entries_results.txt
+Extra Trees,Basic (row-wise),Row-wise,0.107079,0.301998,0.947997,etr_basic_results.txt
+Extra Trees,Group shuffle,Molecule-solvent-pair-grouped,0.512189,0.687359,0.706447,etr_group_shuffle_results.txt
+Extra Trees,Solvent descriptors,Molecule-solvent-pair-grouped,0.536861,0.712064,0.684967,etr_sol_desc_results.txt
+Extra Trees,All entries,Molecule-solvent-pair-grouped,0.433272,0.639053,0.722741,etr_all_entries_results.txt
+CatBoost,Basic (row-wise),Row-wise,0.451633,0.603874,0.792073,catboost_basic_results.txt
+CatBoost,Group shuffle,Molecule-solvent-pair-grouped,0.529262,0.694056,0.700699,catboost_group_shuffle_results.txt
+CatBoost,Solvent descriptors,Molecule-solvent-pair-grouped,0.520441,0.687425,0.706391,catboost_sol_desc_results.txt
+CatBoost,All entries,Molecule-solvent-pair-grouped,0.505093,0.690953,0.675878,catboost_all_entries_results.txt

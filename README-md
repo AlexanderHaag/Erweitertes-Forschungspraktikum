@@ -1,29 +1,62 @@
 # Solubility Prediction with Molecular Descriptors
 
-This project trains a machine learning model to predict solvent-dependent solubility (`logS`) from molecular descriptors. The workflow combines RDKit-based feature extraction with a Random Forest regressor to estimate solubility from SMILES strings and solvent information.
+This project trains Random Forest, Extra Trees, and CatBoost regression models to predict solvent-dependent solubility (`logS`) from molecular and solvent descriptors calculated with RDKit.
 
 ## Overview
 
-The project reads molecular data from a curated CSV file, calculates chemical descriptors such as molecular weight, logP, hydrogen bond counts, aromatic ratio, TPSA, ring count, and functional atom ratio, then trains a regression model to predict `logS`.
+The parser creates filtered and all-entry datasets from the raw database. Each model evaluates predictions with five-fold molecule-solvent-pair-grouped cross-validation and a separate holdout test set.
 
 The main steps are:
 
-1. Parse and filter the source dataset
-2. Extract molecular descriptors using RDKit
-3. Train a Random Forest regressor
-4. Evaluate the model with MAE, RMSE, and R²
-5. Save the results in `results/random_forest_basic_results.txt`
+1. Parse and filter the BigSolDBv2.0 dataset
+2. Extract solute and solvent descriptors using RDKit
+3. Train Random Forest, Extra Trees, or CatBoost regressors
+4. Evaluate with GroupKFold metrics, permutation importance, and holdout test metrics
+5. Save model results under `results/`
 
 ## Project structure
 
 - `data/raw/BigSolDBv2.0.csv` — source dataset with solubility and solvent metadata
 - `data/processed/data_basic.csv` — processed dataset used for the baseline model
+- `data/processed/data_sol_desc.csv` — whitelist-filtered dataset with solvent descriptors
+- `data/processed/data_all_entries.csv` — all rows with valid `logS`, including solvent descriptors
 - `src/extract_descriptors.py` — RDKit descriptor calculation functions
 - `src/dataparser.py` — dataset preparation and filtering logic
+- `src/grouped_validation.py` — shared five-fold grouped validation and importance calculation
 - `src/solvent_list_gen.py` — solvent frequency summary for the dataset
-- `src/rfg_basic.py` — baseline Random Forest model trained on the basic descriptor dataset
+- `src/rfg_group_shuffle.py` — Random Forest model using molecule-solvent-group splits
+- `src/rfg_basic.py` — basic Random Forest model using a row-wise split for comparison
 - `src/rfg_sol_desc.py` — Random Forest model trained with solvent descriptors included
-- `results/random_forest_basic_results.txt` — recorded model performance metrics
+- `src/rfg_all_entries.py` — solvent-descriptor model trained on all supported solvent entries
+- `src/etr_basic.py` — Extra Trees model using a row-wise split
+- `src/etr_group_shuffle.py` — Extra Trees model using molecule-solvent-group splits
+- `src/etr_sol_desc.py` — Extra Trees model trained with solvent descriptors included
+- `src/etr_all_entries.py` — Extra Trees model trained on all entries with valid `logS`
+- `src/catboost_group_shuffle.py` — CatBoost model using molecule-solvent-group splits
+- `src/catboost_basic.py` — basic CatBoost model using a row-wise split for comparison
+- `src/catboost_sol_desc.py` — CatBoost model trained with solvent descriptors
+- `src/catboost_all_entries.py` — CatBoost model trained on all entries with valid `logS`
+- `src/catboost_variant_runner.py` — shared CatBoost training and reporting workflow for the variants
+- `results/rfg_group_shuffle_results.txt` — grouped-split model metrics
+- `results/rfg_basic_results.txt` — row-wise-split basic model metrics
+- `results/rfg_sol_desc_results.txt` — solvent-descriptor model metrics
+- `results/rfg_all_entries_results.txt` — all-entry solvent-descriptor model metrics
+- `results/etr_basic_results.txt` — row-wise Extra Trees model metrics
+- `results/etr_group_shuffle_results.txt` — grouped Extra Trees model metrics
+- `results/etr_sol_desc_results.txt` — solvent-descriptor Extra Trees model metrics
+- `results/etr_all_entries_results.txt` — all-entry Extra Trees model metrics
+- `results/catboost_group_shuffle_results.txt` — grouped CatBoost model metrics
+- `results/catboost_basic_results.txt` — row-wise basic CatBoost model metrics
+- `results/catboost_sol_desc_results.txt` — solvent-descriptor CatBoost model metrics
+- `results/catboost_all_entries_results.txt` — all-entry CatBoost model metrics
+- `results/all_models_test_metrics.csv` — latest test metrics from all models
+- `results/random_forest_test_metrics.png` — Random Forest test-metric column chart
+- `results/extra_trees_test_metrics.png` — Extra Trees test-metric column chart
+- `results/catboost_test_metrics.png` — CatBoost test-metric column chart
+- `results/random_forest_permutation_importance.png` — Random Forest grouped-CV permutation importance
+- `results/extra_trees_permutation_importance.png` — Extra Trees grouped-CV permutation importance
+- `results/catboost_permutation_importance.png` — CatBoost grouped-CV permutation importance
+- `src/summarize_test_metrics.py` — rebuilds the summary CSV and metric charts
 - `requirements.txt` — Python dependencies
 - `tests/test.py` — test scaffold for future validation
 
@@ -48,19 +81,28 @@ pip install -r requirements.txt
 
 ## Usage
 
-Run the basic baseline model:
+Run the molecule-solvent-pair-grouped model:
+
+```bash
+python src/rfg_group_shuffle.py
+```
+
+This writes its metrics to `results/rfg_group_shuffle_results.txt` and will:
+
+- load the training data from `data/processed/data_basic.csv`
+- preprocess numeric and categorical features
+- train the Random Forest model
+- evaluate it on a molecule-solvent-pair-grouped test split
+
+To reproduce the row-wise evaluation for comparison, run:
 
 ```bash
 python src/rfg_basic.py
 ```
 
-This will:
-
-- load the training data from `data/processed/data_basic.csv`
-- preprocess numeric and categorical features
-- train the Random Forest model
-- evaluate it on a test split
-- append the metrics to `results/random_forest_basic_results.txt`
+This writes metrics to `results/rfg_basic_results.txt`. The row-wise holdout may
+place the same molecule-solvent pair in both partitions, so these results are
+not directly comparable to pair-grouped evaluation.
 
 A second model variant using solvent descriptors is also available:
 
@@ -68,14 +110,184 @@ A second model variant using solvent descriptors is also available:
 python src/rfg_sol_desc.py
 ```
 
+To train the solvent-descriptor model on all entries with valid `logS` values,
+including solvents outside the whitelist used by `data_sol_desc.csv`, run:
+
+```bash
+python src/rfg_all_entries.py
+```
+
+This writes metrics to `results/rfg_all_entries_results.txt`.
+
+Run an Extra Trees variant with the same dataset and split options:
+
+```bash
+python src/etr_group_shuffle.py
+python src/etr_basic.py
+python src/etr_sol_desc.py
+python src/etr_all_entries.py
+```
+
+Each writes to its matching `results/etr_*_results.txt` file.
+
+Run the CatBoost model with the same molecule-solvent-pair-grouped split and validation:
+
+```bash
+python src/catboost_group_shuffle.py
+```
+
+This writes metrics to `results/catboost_group_shuffle_results.txt`.
+
+Run the other CatBoost variants with the same datasets and split options as the
+Random Forest and Extra Trees variants:
+
+```bash
+python src/catboost_basic.py
+python src/catboost_sol_desc.py
+python src/catboost_all_entries.py
+```
+
+The basic variant uses a row-wise test split for comparison; solvent-descriptor
+and all-entry variants hold out molecule-solvent pairs.
+
+## Results and discussion
+
+The figures below compare the latest holdout-test results. Lower MAE and RMSE
+indicate smaller prediction errors, while an \(R^2\) closer to 1 indicates that
+the model explains more of the observed variation. MAE and RMSE are in `logS`
+units. The grouped variants use a 10% test set split by molecule-solvent pair;
+the basic variant uses a row-wise test split.
+
+### Random Forest
+
+![Random Forest test-set metrics](results/random_forest_test_metrics.png)
+
+### Extra Trees
+
+![Extra Trees test-set metrics](results/extra_trees_test_metrics.png)
+
+### CatBoost
+
+![CatBoost test-set metrics](results/catboost_test_metrics.png)
+
+### Interpretation across dataset variants
+
+The progression from **basic** to **group shuffle**, **solvent descriptors**,
+and **all entries** changes both the evaluation split and, in later variants,
+the available data and features. The scores therefore describe the specific
+dataset-and-split combinations and they are not a controlled feature-only
+ablation.
+
+1. **Basic (row-wise):** Random Forest and Extra Trees report very low test
+   errors (MAE 0.132 and 0.107; RMSE 0.273 and 0.302) and high \(R^2\) values
+   (0.957 and 0.948). These results are not directly comparable with the
+   following pair-grouped results: a row-wise split can put observations from
+   the same molecule-solvent pair in both training and test sets. The model can
+   consequently benefit from datasets including only a temoerature change, making this a
+   less demanding estimate of generalization. CatBoost's basic score
+   (MAE 0.452, RMSE 0.604, \(R^2=0.792\)) is weaker than the two tree ensembles
+   on this split, so the row-wise advantage should not be interpreted as a
+   uniform improvement across model families.
+2. **Group shuffle:** Grouping molecule-solvent pairs removes this bias by not 
+   having similar data in both training and validation data, resulting in a 
+   stricter estimate for unseen pairs. All three models show a substantial
+   increase in error relative to their row-wise result where that comparison
+   is available. Random Forest performs best here (MAE 0.483, RMSE 0.669,
+   \(R^2=0.722\)), followed by Extra Trees (0.512, 0.687, 0.706) and CatBoost
+   (0.529, 0.694, 0.701). The drop is consistent with the row-wise split
+   benefiting from pair overlap. The Split does not by itself establish how the
+   models perform on entirely unseen molecules, since grouping is by pair.
+3. **Solvent descriptors:** Adding explicit solvent descriptors improves
+   Random Forest relative to its grouped result (MAE 0.450, RMSE 0.640,
+   \(R^2=0.746\)), and improves CatBoost (MAE 0.520, RMSE 0.687,
+   \(R^2=0.706\)). Extra Trees instead worsens on all three measures (MAE
+   0.537, RMSE 0.712, \(R^2=0.685\)), however these changes are very minimal.
+   Thus the additional solvent features are not uniformly beneficial: their 
+   value depends on the learner and the sampled test pairs.
+4. **All entries:** Extending coverage to all supported entries provides more
+   observations (about 101,000 rows rather than about 64,800 in the filtered
+   datasets), but does not improve every model. Random Forest has the lowest
+   MAE of its grouped variants (0.412), and Extra Trees also improves over its
+   group-shuffle result (MAE 0.433, RMSE 0.639, \(R^2=0.723\)). For CatBoost,
+   all-entry results are slightly worse than its group-shuffle results (MAE
+   0.505, RMSE 0.691, \(R^2=0.676\)) and do not surpass its solvent-descriptor
+   result. More training rows alone therefore do not guarantee better
+   generalization; the broader entry set also changes the data distribution
+   and the composition of the held-out pairs.
+
+Across the pair-grouped variants, Random Forest is the strongest overall
+performer on this holdout: it has the lowest MAE and RMSE for group shuffle,
+solvent descriptors, and all entries, as well as the highest \(R^2\) for the
+first two. Extra Trees is competitive on all entries, while CatBoost does not
+lead any of the grouped comparisons. This ranking is descriptive rather than
+evidence of statistically significant differences. The reported test metrics
+come from one holdout split, five-fold grouped cross-validation results
+and their fold-to-fold standard deviations are available in the individual
+result logs and provide context on variability, but do not replace repeated
+independent test splits or uncertainty intervals for the differences between
+models.
+
+### Permutation importance
+
+The following charts show mean permutation importance from five-fold,
+molecule-solvent-pair-grouped cross-validation for each model variant. Values
+are the increase in validation RMSE after shuffling a feature and larger 
+positive values indicate greater predictive contribution in that fitted model. 
+Error bars show the fold-to-fold standard deviation. Negative or near-zero 
+values indicate little or no consistent predictive contribution and are not 
+evidence of a statistically significant effect. Basic variants use the row-
+wise training dataset but still calculate these importance values using 
+grouped cross-validation. Since feature sets differ between variants, compare 
+feature rankings within each panel with care.
+
+![Random Forest grouped-CV permutation importance](results/random_forest_permutation_importance.png)
+
+![Extra Trees grouped-CV permutation importance](results/extra_trees_permutation_importance.png)
+
+![CatBoost grouped-CV permutation importance](results/catboost_permutation_importance.png)
+
+The results of the random-forest-regressor permutation importance show that 
+all models result in a very similar order and values of the descriptors. 
+In the models trained with row
+
+
+
+Regenerate the consolidated test-metric file and charts with:
+
+```bash
+python src/summarize_test_metrics.py
+```
+
 ## Model details
 
-The baseline model uses:
+Random Forest, Extra Trees, and CatBoost models use five-fold `GroupKFold` validation
+on the training portion, with each molecule-solvent pair kept together. They report mean and
+standard deviation across folds, then evaluate once on a separate test split.
+The `rfg_basic.py`, `etr_basic.py`, and `catboost_basic.py` variants keep a
+row-wise test split for comparison; the other variants use a molecule-solvent-pair-grouped
+test split.
+
+The models use:
 
 - `RandomForestRegressor`
-- one-hot encoding for the solvent feature
-- a train/test split with `test_size=0.1`
-- metrics: `mean_absolute_error`, `root_mean_squared_error`, and `r2_score`
+- `ExtraTreesRegressor` as a parallel implementation for each data/split variant
+- `CatBoostRegressor` with native solvent categorical handling, 400 boosting iterations, learning rate 0.05, and depth 8
+- the same primary hyperparameters, including 400 trees and `max_features=0.5`
+- five-fold `GroupKFold` validation that keeps each molecule-solvent pair together
+- a final model refit on the full non-test data before holdout evaluation
+- row-wise test splits for the `*_basic.py` variants; molecule-solvent-pair-grouped test splits for the other variants
+- validation permutation importance as descriptive feature importance, not a significance test
+- metrics: MAE, RMSE, and R²
+
+The parser stores a canonical `solvent_id` alongside each row so pair grouping
+uses the actual solvent molecule. Re-run `python src/dataparser.py` to add this
+column to existing processed datasets; solvent-descriptor and all-entry models
+require it because descriptor vectors alone do not uniquely identify every
+solvent. Basic datasets can use the solvent name when `solvent_id` is absent.
+The Random Forest and Extra Trees basic models one-hot encode the solvent name;
+CatBoost handles it natively as categorical data. Solvent-descriptor models use
+numeric solvent descriptors instead. The all-entries models use rows with valid
+`logS` values without applying the solvent whitelist used for `data_sol_desc.csv`.
 
 ## Notes
 

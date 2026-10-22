@@ -1,0 +1,38 @@
+GROUP-SHUFFLE CATBOOST MODEL: Test size: 0.1; GroupKFold folds by molecule-solvent pair: 5; ITERATIONS: 400; RANDOM_STATE: 42
+LEARNING_RATE: 0.05; DEPTH: 8; THREAD_COUNT: -1
+Rows used: 64777 (dropped 0)
+Training pool rows/molecule-solvent pairs: 58207/6172
+Test rows/molecule-solvent pairs: 6570/686
+
+Fold row/molecule-solvent-pair counts (train, validation):
+	Fold 1: 46565/4937, 11642/1235
+	Fold 2: 46565/4937, 11642/1235
+	Fold 3: 46566/4938, 11641/1234
+	Fold 4: 46566/4938, 11641/1234
+	Fold 5: 46566/4938, 11641/1234
+
+GroupKFold metrics (mean +/- std across folds):
+	MAE: 0.562450 +/- 0.026211
+	RMSE: 0.747652 +/- 0.033683
+	R2: 0.673375 +/- 0.014324
+
+GroupKFold permutation importance (mean RMSE increase +/- std across folds and repeats; descriptive, not p-values):
+	solvent: 0.433533 +/- 0.011922
+	logP: 0.280640 +/- 0.015115
+	mol_weight: 0.211492 +/- 0.008379
+	ring_count: 0.171703 +/- 0.013699
+	tpsa: 0.154856 +/- 0.009918
+	arom_ratio: 0.105986 +/- 0.007321
+	func_atom_ratio: 0.103047 +/- 0.008912
+	H_donors: 0.101047 +/- 0.008955
+	temp: 0.058147 +/- 0.003137
+	H_acceptors: 0.053139 +/- 0.005183
+	formal_charge: 0.004132 +/- 0.004315
+Test metrics:
+	MAE: 0.529262
+	RMSE: 0.694056
+	R2: 0.700699
+Baseline test metrics:
+	MAE: 1.005276
+	RMSE: 1.268927
+	R2: -0.000442
