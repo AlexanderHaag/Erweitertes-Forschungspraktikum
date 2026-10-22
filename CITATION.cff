@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+title: Solubility Prediction with Molecular Descriptors
+message: >-
+  Solubility Predictor to compare different machine learning
+  models
+type: software
+authors:
+  - given-names: Alexander
+    family-names: Haag
+    email: alexander.haag@uni-jena.de
+    affiliation: FSU Jena
+    orcid: 'https://orcid.org/0009-0009-8198-8877'
+repository-code: >-
+  https://github.com/AlexanderHaag/Erweitertes-Forschungspraktikum
+abstract: >-
+  This project trains Random Forest, Extra Trees, and
+  CatBoost regression models to predict solvent-dependent
+  solubility (`logS`) from molecular and solvent descriptors
+  calculated with RDKit.
+license: MIT
