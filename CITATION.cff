@@ -10,6 +10,9 @@ authors:
     email: alexander.haag@uni-jena.de
     affiliation: FSU Jena
     orcid: 'https://orcid.org/0009-0009-8198-8877'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23726802
 repository-code: >-
   https://github.com/AlexanderHaag/Erweitertes-Forschungspraktikum
 abstract: >-
